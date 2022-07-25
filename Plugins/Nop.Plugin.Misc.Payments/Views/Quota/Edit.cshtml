@@ -1,0 +1,28 @@
+﻿@model QuotaModel
+@{
+    Layout = "_AdminLayout";
+    ViewBag.PageTitle = T("Plugins.Payments.CustomQuota.Quota.Edit").Text;
+    NopHtml.SetActiveMenuItemSystemName(CustomQuotaDefaults.SystemName);
+}
+
+<form asp-controller="CustomQuota" asp-action="Edit" method="post" id="quota-create-form">
+    <div class="content-header clearfix">
+        <h1 class="float-left">
+            @T("Plugins.Payments.CustomQuota.Quota.Edit") - @Model.Id
+            <small>
+                <i class="fas fa-arrow-circle-left"></i>
+                <a asp-action="List">@T("Plugins.Payments.CustomQuota.Quota.BackToList")</a>
+            </small>
+        </h1>
+        <div class="float-right"> 
+            <span id="notification-delete" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i>
+                @T("Admin.Common.Delete")
+            </span>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Plugins/Misc.Payments/Views/Quota/_CreateOrUpdate.cshtml", Model)
+    @await Html.PartialAsync("~/Plugins/Misc.Payments/Views/QuotaDetails/List.cshtml", new QuotaDetailsSearchModel{QuotaId= Model.Id})
+</form> 
+ 
+<nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="notification-delete" />

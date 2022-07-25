@@ -1,0 +1,11 @@
+{
+  "Group": "Payment methods",
+  "FriendlyName": "PagoEfectivo",
+  "SystemName": "Payments.PagoEfectivo",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.50" ],
+  "Author": "Pedro Curich",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Payments.PagoEfectivo.dll",
+  "Description": "This plugin allows paying with PagoEfectivo Plattform"
+}

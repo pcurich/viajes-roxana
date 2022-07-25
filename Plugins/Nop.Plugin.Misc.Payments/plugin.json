@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Misc",
+  "FriendlyName": "Custom Quota Payments",
+  "SystemName": "Misc.Payments",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.50" ],
+  "Author": "Pedro Curich",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Misc.Payments.dll",
+  "Description": "This plugin allows Custom Quota of Orden Payment"
+}

@@ -1,0 +1,41 @@
+﻿@model ConfigurationModel
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+<form asp-controller="CustomQuota" asp-action="Configure" method="post">
+    <div class="cards-group">
+        <div class="card card-default no-margin">
+            <div class="card-header">
+                @T("Plugins.Payments.CustomQuota.Configuration.Credentials")
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="OrderStatusId_OverrideForStore" asp-input="OrderStatusId" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="OrderStatusId" />
+                    </div>
+                    <div class="col-md-6">
+                        <nop-select asp-for="OrderStatusId" asp-items="Model.AvailableOrderStatus" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="FrecuencyId_OverrideForStore" asp-input="FrecuencyId" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="FrecuencyId" />
+                    </div>
+                    <div class="col-md-6">
+                        <nop-select asp-for="FrecuencyId" asp-items="Model.AvailableFrequencies" />
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="form-group row">
+            <div class="col-md-9 offset-md-3">
+                <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
+            </div>
+        </div>
+    </div>
+</form>

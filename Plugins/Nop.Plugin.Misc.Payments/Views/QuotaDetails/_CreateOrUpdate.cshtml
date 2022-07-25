@@ -1,0 +1,104 @@
+﻿@model QuotaDetailsModel
+@using Nop.Plugin.Misc.Payments.Models.List
+
+<input asp -for= "Id" type = "hidden" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="OrderId" />
+                            </div>
+                            <div class="col-md-8">
+                                @Model.OrderId
+                                <span asp-validation-for="OrderId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="CustomerId" />
+                            </div>
+                            <div class="col-md-8">
+                                @Model.CustomerId
+                                <span asp-validation-for="CustomerId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="Sequence" />
+                            </div>
+                            <div class="col-md-8">
+                                @Model.Sequence
+                                <span asp-validation-for="Sequence"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="Amount"/>
+                            </div>
+                            <div class="col-md-8">
+                                <nop-editor asp-for="Amount" />
+                                <span asp-validation-for="Amount"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="PaymentStatusId"/>
+                            </div>
+                            <div class="col-md-8">
+                                <nop-select asp-for="PaymentStatusId" asp-items="Model.AvailablePaymentStatus" />
+                                <span asp-validation-for="PaymentStatusId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="SchedulerDateOn"/>
+                            </div>
+                            <div class="col-md-8">
+                                <nop-editor asp-for="SchedulerDateOn" />
+                                <span asp-validation-for="SchedulerDateOn"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="PaymentDateOn"/>
+                            </div>
+                            <div class="col-md-8">
+                                @if (Model.PaymentDateOn.HasValue)
+                                {
+                                    <nop-editor asp-for="PaymentDateOn" />
+                                }
+
+                                <span asp-validation-for="PaymentDateOn"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="CreatedOn"/>
+                            </div>
+                            <div class="col-md-8">
+                                @Model.CreatedOn
+                                <span asp-validation-for="CreatedOn"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="UpdatedOn"/>
+                            </div>
+                            <div class="col-md-8">
+                                @Model.UpdatedOn
+                                <span asp-validation-for="UpdatedOn"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

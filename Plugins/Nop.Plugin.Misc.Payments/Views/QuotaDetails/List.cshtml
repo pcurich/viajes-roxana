@@ -1,0 +1,137 @@
+﻿@model QuotaDetailsSearchModel
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                 <div class="card card-default">
+                    <div class="card-body">
+                        @await Html.PartialAsync("Table", new DataTablesModel
+                        {
+                            Name = "quotas-grid",
+                            UrlRead = new DataUrl("ListDetails", "CustomQuota", new Microsoft.AspNetCore.Routing.RouteValueDictionary { [nameof(QuotaDetailsSearchModel.QuotaId)] = Model.QuotaId }),
+                            Length = 100,
+                            LengthMenu = "100",
+                            Filters = new List<FilterParameter>
+                            {
+                                new FilterParameter(nameof(Model.QuotaId))
+                            },
+                            ColumnCollection = new List<ColumnProperty>
+                            {
+                                new ColumnProperty(nameof(QuotaDetailsModel.Id))
+                                {
+                                    Title = "#",
+                                    Width = "60"
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.OrderId))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.OrderId").Text,
+                                    Width = "50",
+                                    Render = new RenderLink(new DataUrl("~/Admin/Order/Edit", nameof(QuotaDetailsModel.OrderId)))
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.OrderNoteId))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.OrderNoteId").Text,
+                                    Width = "50",
+                                    Render = new RenderLink(new DataUrl("~/Admin/Order/Edit", nameof(QuotaDetailsModel.OrderId)))
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.Sequence))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.Sequence").Text,
+                                    Width = "50" 
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.AmountStr))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.Amount").Text,
+                                    Width = "50" 
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.PaymentStatus))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.PaymentStatusId").Text,
+                                    Width = "100",
+                                    Render = new RenderCustom("renderColumnPaymentStatus")
+                                },
+                                
+                                new ColumnProperty(nameof(QuotaDetailsModel.SchedulerDateOn))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.SchedulerDateOn").Text,
+                                    Width = "150",
+                                    Render = new RenderDate()
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.PaymentDateOn))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.PaymentDateOn").Text,
+                                    Width = "150",
+                                    Render = new RenderDate()
+                                },
+                                new ColumnProperty(nameof(QuotaDetailsModel.Id))
+                                {
+                                    Title = T("Admin.Common.Edit").Text,
+                                    Width = "100",
+                                    ClassName = NopColumnClassDefaults.Button,
+                                    Render = new RenderButtonEdit(new DataUrl("~/Admin/CustomQuota/EditDetails/", false))
+                                }
+                            }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function renderColumnPaymentStatus(data, type, row, meta) {
+        var color;
+        switch (row.PaymentStatusId) {
+        case 10:
+            color = 'yellow';
+            break;
+        case 20:
+            color = 'blue';
+            break;
+        case 30:
+            color = 'green';
+            break;
+        case 35:
+            color = 'green';
+            break;
+        case 40:
+            color = 'red';
+            break;
+        case 50:
+            color = 'red';
+            break;
+        }
+        return '<span class="grid-report-item ' + color + '">' + data + '</span >';
+     }
+     function renderColumnFrecuencyList(data, type, row, meta) {
+        var color;
+        switch (row.FrecuencyId) {
+        case 1:
+            color = 'color: #fff; background-color: red';
+            break;
+        case 2:
+            color = 'color: #000; background-color: pink';
+            break;
+        case 3:
+            color = 'color: #fff; background-color: purple';
+            break;
+        case 4:
+            color = 'color: #fff; background-color: indigo';
+            break;
+        case 5:
+            color = 'color: #fff; background-color: blue';
+            break;
+        case 6:
+            color = 'color: #000; background-color: cyan';
+            break;
+        case 7:
+            color = 'color: #000; background-color: lime';
+            break;
+        case 8:
+            color = 'color: #fff; background-color: brown';
+            break;
+        }
+        return '<span class="grid-report-item" style="'+ color + '">' + data + '</span >';
+     }
+</script>

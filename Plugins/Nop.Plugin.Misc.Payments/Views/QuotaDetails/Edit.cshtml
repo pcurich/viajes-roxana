@@ -1,0 +1,29 @@
+﻿@model QuotaDetailsModel
+@{
+    Layout = "_AdminLayout";
+    ViewBag.PageTitle = T("Plugins.Payments.CustomQuota.Quota.Edit").Text;
+    NopHtml.SetActiveMenuItemSystemName(CustomQuotaDefaults.SystemName);
+}
+
+<form asp-controller="CustomQuota" asp-action="EditDetails" method="post" id="quota-edit-form">
+    <div class="content-header clearfix">
+        <h1 class="float-left">
+            @T("Plugins.Payments.CustomQuota.Quota.Edit") - @Model.Id
+            <small>
+                <i class="fas fa-arrow-circle-left"></i>
+                <a asp-action="Edit" asp-route-id="@Model.QuotaId">@T("Plugins.Payments.CustomQuota.Quota.BackToList")</a>
+            </small>
+        </h1>
+        <div class="float-right"> 
+            @if (Model.OrderId > 0)
+            {
+                <button type="submit" name="save-continue" class="btn btn-primary">
+                    <i class="far fa-save"></i>
+                    @T("Admin.Common.Update")
+                </button>
+            }
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Plugins/Misc.Payments/Views/QuotaDetails/_CreateOrUpdate.cshtml", Model)
+    @await Html.PartialAsync("~/Plugins/Misc.Payments/Views/QuotaDetails/_OrderDetails.Notes.cshtml", Model.OrderNoteModel)
+</form> 

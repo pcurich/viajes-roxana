@@ -1,0 +1,200 @@
+﻿@model QuotaSearchModel
+@{
+    Layout = "_AdminLayout";
+    ViewBag.PageTitle = T("Plugins.Payments.CustomQuota.Menu.Title").Text;
+    NopHtml.SetActiveMenuItemSystemName("Payments.CustomQuota.Menu");
+}
+
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        @T("Plugins.Payments.CustomQuota.Quota.List")
+    </h1>
+    <div class="float-right">
+        <a href="@Url.Action("Create", "CustomQuota")" class="btn btn-primary">
+            <i class="fas fa-plus-square"></i>
+            @T("Plugins.Payments.CustomQuota.Quota.New")
+        </a>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="card card-default card-search">
+                    <div class="card-body">
+                        <div class="row search-row opened">
+                            <div class="search-text">@T("Admin.Common.Search")</div>
+                            <div class="icon-search"><i class="fas fa-search" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="search-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="OrderId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="OrderId" />
+                                            <span asp-validation-for="OrderId"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="OrderStatusId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-select asp-for="OrderStatusId" asp-items="Model.AvailableOrderStatus" />
+                                            <span asp-validation-for="OrderStatusId"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 offset-md-4">
+                                    <button type="button" id="search-quotas" class="btn btn-primary btn-search">
+                                        <i class="fas fa-search"></i>
+                                        @T("Admin.Common.Search")
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-default">
+                    <div class="card-body">
+                        @await Html.PartialAsync("Table", new DataTablesModel
+                        {
+                            Name = "quotas-grid",
+                            UrlRead = new DataUrl("List", "CustomQuota", null),
+                            SearchButtonId = "search-quotas",
+                            Length = Model.PageSize,
+                            LengthMenu = Model.AvailablePageSizes,
+                            Filters = new List<FilterParameter>
+                            {
+                                new FilterParameter(nameof(Model.OrderId)),
+                                new FilterParameter(nameof(Model.OrderStatusId))
+                            },
+                            ColumnCollection = new List<ColumnProperty>
+                            {
+                                new ColumnProperty(nameof(QuotaModel.Id))
+                                {
+                                    Title = "#",
+                                    Width = "60"
+                                },
+                                new ColumnProperty(nameof(QuotaModel.OrderId))
+                                {
+                                    Title = T("Plugins.Payments.PagoEfectivo.Fields.OrderId").Text,
+                                    Width = "50",
+                                    Render = new RenderLink(new DataUrl("~/Admin/Order/Edit", nameof(QuotaModel.OrderId)))
+                                },
+                                new ColumnProperty(nameof(QuotaModel.OrderStatus))
+                                {
+                                    Title = T("Admin.Orders.Fields.OrderStatus").Text,
+                                    Width = "100",
+                                    Render = new RenderCustom("renderColumnOrderStatus")
+                                },
+                                new ColumnProperty(nameof(QuotaModel.CustomerId))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.CustomerId").Text,
+                                    Width = "50",
+                                    Render = new RenderLink(new DataUrl("~/Admin/Customer/Edit", nameof(QuotaModel.CustomerId)))
+                                },
+                                new ColumnProperty(nameof(QuotaModel.StartTimeOn))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.StartTimeOn").Text,
+                                    Width = "50",
+                                    Render = new RenderDate()
+                                },
+                                new ColumnProperty(nameof(QuotaModel.Frecuency))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.FrecuencyId").Text,
+                                    Width = "100",
+                                    Render = new RenderCustom("renderColumnFrecuencyList")
+                                },
+                                new ColumnProperty(nameof(QuotaModel.OrderTotal))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.OrderTotal").Text,
+                                    Width = "200",
+                                },
+                                new ColumnProperty(nameof(QuotaModel.CreatedOn))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.CreatedOn").Text,
+                                    Width = "200",
+                                    Render = new RenderDate()
+                                },
+                                new ColumnProperty(nameof(QuotaModel.UpdatedOn))
+                                {
+                                    Title = T("Plugins.Payments.CustomQuota.Fields.UpdatedOn").Text,
+                                    Width = "200",
+                                    Render = new RenderDate()
+                                },
+                                new ColumnProperty(nameof(QuotaModel.Id))
+                                {
+                                    Title = T("Admin.Common.Edit").Text,
+                                    Width = "100",
+                                    ClassName = NopColumnClassDefaults.Button,
+                                    Render = new RenderButtonEdit(new DataUrl("~/Admin/CustomQuota/Edit/", false))
+                                }
+                            }
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function renderColumnOrderStatus(data, type, row, meta) {
+        var color;
+        switch (row.OrderStatusId) {
+        case 10:
+            color = 'yellow';
+            break;
+        case 20:
+            color = 'blue';
+            break;
+        case 30:
+            color = 'green';
+            break;
+        case 40:
+            color = 'red';
+            break;
+        }
+        return '<span class="grid-report-item ' + color + '">' + data + '</span >';
+     }
+     function renderColumnFrecuencyList(data, type, row, meta) {
+        var color;
+        switch (row.FrecuencyId) {
+        case 1:
+            color = 'color: #fff; background-color: red';
+            break;
+        case 2:
+            color = 'color: #000; background-color: pink';
+            break;
+        case 3:
+            color = 'color: #fff; background-color: purple';
+            break;
+        case 4:
+            color = 'color: #fff; background-color: indigo';
+            break;
+        case 5:
+            color = 'color: #fff; background-color: blue';
+            break;
+        case 6:
+            color = 'color: #000; background-color: cyan';
+            break;
+        case 7:
+            color = 'color: #000; background-color: lime';
+            break;
+        case 8:
+            color = 'color: #fff; background-color: brown';
+            break;
+        }
+        return '<span class="grid-report-item" style="'+ color + '">' + data + '</span >';
+     }
+</script>

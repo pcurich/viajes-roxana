@@ -1,0 +1,119 @@
+﻿@model QuotaModel
+@using Nop.Plugin.Misc.Payments.Models.List
+
+<input asp -for= "Id" type = "hidden" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="cards-group">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="OrderId" />
+                            </div>
+                            <div class="col-md-8">
+                                <nop-editor asp-for="OrderId" />
+                                <span asp-validation-for="OrderId"></span>
+                            </div>
+                        </div>
+                        @if (Model.Id > 0)
+                        {
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <nop-label asp-for="OrderTotal" />
+                                </div>
+                                <div class="col-md-8">
+                                    <nop-editor asp-for="OrderTotal" html-attributes="@(new { disabled = true })"/>
+                                    <span asp-validation-for="OrderTotal"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <nop-label asp-for="OrderStatus" />
+                                </div>
+                                <div class="col-md-8">
+                                    <nop-editor asp-for="OrderStatus" html-attributes="@(new { disabled = true })"/>
+                                    <span asp-validation-for="OrderStatus"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <nop-label asp-for="CustomerId" />
+                                </div>
+                                <div class="col-md-8">
+                                    <nop-editor asp-for="CustomerId" />
+                                    <span asp-validation-for="CustomerId"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <nop-label asp-for="FrecuencyId" />
+                                </div>
+                                <div class="col-md-8">
+                                    <nop-editor asp-for="Frecuency" html-attributes="@(new { disabled = true })"/>
+                                    <span asp-validation-for="Frecuency"></span>
+                                </div>
+                            </div>
+
+                        }
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="Quotas" />
+                            </div>
+                            <div class="col-md-8">
+                                <nop-editor asp-for="Quotas" />
+                                <span asp-validation-for="Quotas"></span>
+                            </div>
+                        </div> 
+
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="StartTimeOn" />
+                            </div>
+                            <div class="col-md-8">
+                                <nop-editor asp-for="StartTimeOn" />
+                            </div>
+                        </div>
+                        @if(Model.Id == 0)
+                        {
+                            <div class="form-group row">
+                            <div class="col-md-4">
+                                <nop-label asp-for="FrecuencyId" />
+                            </div>
+                            <div class="col-md-8">
+                                <nop-select asp-for="FrecuencyId" asp-items="Model.AvailableFrequencies" />
+                            </div>
+                        </div>
+                        }
+                        
+                        @if (Model.Id > 0)
+                        {
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <nop-label asp-for="CreatedOn" />
+                                </div>
+                                <div class="col-md-8">
+                                    <nop-editor asp-for="CreatedOn" html-attributes="@(new { disabled = true })"/>
+                                    <span asp-validation-for="CreatedOn"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <nop-label asp-for="UpdatedOn" />
+                                </div>
+                                <div class="col-md-8">
+                                    <nop-editor asp-for="UpdatedOn" html-attributes="@(new { disabled = true })"/>
+                                    <span asp-validation-for="UpdatedOn"></span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
