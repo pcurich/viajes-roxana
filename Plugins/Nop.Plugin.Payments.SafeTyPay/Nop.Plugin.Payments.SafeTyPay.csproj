@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Copyright>SOME_COPYRIGHT</Copyright>
@@ -9,61 +9,66 @@
     <PackageProjectUrl>PACKAGE_PROJECT_URL</PackageProjectUrl>
     <RepositoryUrl>REPOSITORY_URL</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <OutputPath>..\..\Presentation\Nop.Web\Plugins\Payments.PagoEfectivo</OutputPath>
+    <OutputPath>..\..\Presentation\Nop.Web\Plugins\Payments.SafeTyPay</OutputPath>
     <OutDir>$(OutputPath)</OutDir>
     <!--Set this parameter to true to get the dlls copied from the NuGet cache to the output of your project.
     You need to set this parameter to true if your plugin has a nuget package 
     to ensure that the dlls copied from the NuGet cache to the output of your project-->
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <Version>1.0.1</Version>
+    <Description>This payment module allows you to integrate with payment gateway SafeTyPay. Let the system manage payments using scheduled tasks</Description>
   </PropertyGroup>
-  
+
+    <ItemGroup>
+    <Compile Remove="Models\ErrorManagerTypeList.cs" />
+    <Compile Remove="Models\OperationActivityTypeList.cs" />
+    <Compile Remove="Models\PaymentStatusType.cs" />
+    <Compile Remove="Models\PaymentStatusTypeList.cs" />
+  </ItemGroup> 
+
   <ItemGroup>
     <None Remove="logo.jpg" />
     <None Remove="plugin.json" />
     <None Remove="Views\Configure.cshtml" />
-    <None Remove="Views\Create.cshtml" />
-    <None Remove="Views\Edit.cshtml" />
-    <None Remove="Views\List.cshtml" />
     <None Remove="Views\PaymentInfo.cshtml" />
-    <None Remove="Views\_CreateOrUpdate.cshtml" />
-    <None Remove="Views\_ViewImports.cshtml" />
+    <None Remove="Views\_Configure.Configure.cshtml" />
+    <None Remove="Views\_Configure.PaymentPending.cshtml" />
+    <None Remove="Views\_ViewImports.cshtml" />    
+
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="logo.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Edit.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\_CreateOrUpdate.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\Create.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Views\List.cshtml">
+    <Content Include="Views\_Configure.Configure.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Configure.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\PaymentInfo.cshtml">
+    <Content Include="Views\_Configure.PaymentPending.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\_ViewImports.cshtml">
+    <Content Include="Views\PaymentInfo.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Presentation\Nop.Web\Nop.Web.csproj" />
+    <ProjectReference Include="..\..\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj" />
     <ClearPluginAssemblies Include="$(MSBuildProjectDirectory)\..\..\Build\ClearPluginAssemblies.proj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Content Include="Views\_ViewImports.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <!-- This target execute after "Build" target -->
   <Target Name="NopTarget" AfterTargets="Build">
     <!-- Delete unnecessary libraries from plugins path -->
